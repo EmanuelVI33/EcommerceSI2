@@ -19,12 +19,16 @@ export class AxiosClient implements HttpClient {
         return AxiosClient.instance;
     }
 
-    async get<T>(url: string): Promise<T> {
-        const response = await AxiosClient.getAxiosInstance().get<T>(url);
+    async get<T>(url: string, token = '') : Promise<T> {
+        const response = await AxiosClient.getAxiosInstance().get<T>(url, {
+            headers: { 'Authorization': `Bearer ${token}`}
+        });
         return response.data;
     }
     
-    async post<T>(url: string, data: unknown) {
-        return AxiosClient.getAxiosInstance().post<T>(url, data);
+    async post<T>(url: string, data: unknown, token = '') {
+        return AxiosClient.getAxiosInstance().post<T>(url, data, {
+            headers:  { 'Authorization': `Bearer ${token}`}
+        });
     }
 }
