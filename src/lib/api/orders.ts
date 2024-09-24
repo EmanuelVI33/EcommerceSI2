@@ -1,7 +1,7 @@
-import { createHttpClient } from '../adapters/http/http-client-factory';
 import { CreateOrderData } from '../../types/index';
+import { httpPrivate } from '../adapters/http/http-client-factory';
 
-const httpClient = createHttpClient();
+const httpClient = httpPrivate();
 
 export async function createOrder(data: CreateOrderData) {
     return httpClient.post('orders', {

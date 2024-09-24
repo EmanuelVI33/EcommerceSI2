@@ -1,7 +1,7 @@
 import { Product } from "@/src/types";
-import { createHttpClient } from "../adapters/http/http-client-factory";
+import { httpPrivate } from "../adapters/http/http-client-factory";
 
-const httpClient = createHttpClient();
+const httpClient = httpPrivate()
 
 export async function getProducts(token: string) {
     return await httpClient.get<Product[]>('/admin/products', token)
