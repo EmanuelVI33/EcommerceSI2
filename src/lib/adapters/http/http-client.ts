@@ -1,4 +1,6 @@
+import { Response } from "@/src/types";
+
 export interface HttpClient {
-    get<T>(url: string, token?: string): Promise<T>;
-    post(url: string, data: unknown): unknown;
+    get<T>(url: string, token?: string): Promise<Response<T>>;
+    post<T>(url: string, data: unknown): Promise<Response<T>>;
 }

@@ -1,3 +1,5 @@
+import { Toaster } from "@/components/ui/sonner";
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode}>) {
 
     return (
@@ -7,6 +9,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     {children}
                 </main>
             </div>
+            <Toaster />
         </>
     )
 }

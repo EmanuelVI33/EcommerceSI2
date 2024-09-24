@@ -17,14 +17,24 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginAction } from "@/actions/auth-actions"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 function LoginCard() {
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
     })
+    const router = useRouter()
 
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-       await loginAction(values)
+        const response = await loginAction(values)
+        console.log(`Respuesta cliente ${response.message}`)
+        if (response.success === false) {
+            console.log(`Error cliente`)
+            toast.error(response.message);
+        } else {
+            router.push('/products')
+        }
     }
 
     return (

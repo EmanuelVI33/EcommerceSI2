@@ -1,3 +1,10 @@
+export type Response<T> = {
+    status?: number 
+    message?: string
+    success: boolean    
+    data?: T;
+}
+
 export type Category = {
     id: string
     name: string
