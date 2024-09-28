@@ -4,7 +4,10 @@ export type Response<T> = {
     success: boolean    
     data?: T;
 }
-
+export type AuthResponse = {
+    token: string
+    userId: string
+}
 export type Category = {
     id: string
     name: string
@@ -25,9 +28,9 @@ export type OrderProduct = {
 export type Order = {
     id: number
     total: number
-    date: string
-    name: string
-    status:  boolean 
+    orderDate: string
+    status: number 
+    paymentMethod: number
     orderProduct: OrderProduct[]
 }
 export type OrderItem = Pick<Product, 'id' | 'name' | 'price'> & {
@@ -40,6 +43,6 @@ export type OrderWithProducts = Order & {
     })[]
 }
 export type CreateOrderData = {
-    name: string
+    userId: string
     order: OrderItem[]
 }

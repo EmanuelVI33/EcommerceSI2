@@ -29,12 +29,14 @@ function LoginCard() {
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         const response = await loginAction(values)
         console.log(`Respuesta cliente ${response.message}`)
-        if (response.success === false) {
-            console.log(`Error cliente`)
-            toast.error(response.message);
-        } else {
-            router.push('/products')
+
+        if (response.success && response.data) {
+            localStorage.setItem('token', response.data?.token);
+            router.push('/orders/1')
+            return
         }
+
+        toast.error(`${response.status} - ${response.message}`);
     }
 
     return (

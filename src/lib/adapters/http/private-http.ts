@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'; 
+// import { cookies } from 'next/headers'; 
 import { BaseAxiosClient } from './axios-client';
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
@@ -7,12 +7,12 @@ export class PrivateAxiosClient extends BaseAxiosClient {
         // Interceptor para añadir automáticamente el token
         this.instance.interceptors.request.use(
             (config: InternalAxiosRequestConfig) => {
-                const cookieStore = cookies();
-                const token = cookieStore.get('token')?.value ?? '';
+                // const cookieStore = cookies();
+                // const token = cookieStore.get('token')?.value ?? '';
 
-                if (token && config.headers) {
-                    config.headers['Authorization'] = `Bearer ${token}`;
-                }
+                // if (token && config.headers) {
+                //     config.headers['Authorization'] = `Bearer ${token}`;
+                // }
 
                 return config;
             },

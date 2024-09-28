@@ -18,9 +18,11 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  console.log(`Si tiene token ${token}`)
+  const response = NextResponse.next();
+  console.log(`Agregar token a solicitud ${token}`)
+  // response.headers.set('Authorization', `Bearer ${token}`);
 
-  return NextResponse.next();
+  return response;
 }
 
 // Configuración del middleware para que se aplique a todas las rutas
@@ -28,6 +30,7 @@ export const config = {
   matcher: [
     '/auth/:path*',
     '/products/:path*',
-    '/categories/:path*' 
+    '/categories/:path*',
+    '/orders/:path*'  
   ],
 };

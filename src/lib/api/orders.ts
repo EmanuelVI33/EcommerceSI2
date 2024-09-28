@@ -1,14 +1,15 @@
-import { CreateOrderData } from '../../types/index';
-import { httpPrivate } from '../adapters/http/http-client-factory';
+import { cookies } from 'next/headers';
+import { CreateOrderData, Order } from '../../types/index';
+import { httpPublic } from '../adapters/http/http-client-factory';
 
-const httpClient = httpPrivate();
+const httpClient = httpPublic();
 
-export async function createOrder(data: CreateOrderData) {
-    return httpClient.post('orders', {
-        name: data.name,
-        orderProducts: data.order.map(product => ({
-            productId: product.id,
-            queantity: product.quantity
-        }))      
-    });
+export async function createOrder(data: CreateOrderData, token: string) {
+    return await httpClient.post<number>('/orders', data, token);     
+}
+
+export async function getOrders() {
+    const userId = cookies().get('userId')?.value ?? ''
+    const token = cookies().get('token')?.value ?? ''
+    return await httpClient.get<Order[]>(`/orders/history/${userId}`, token);     
 }

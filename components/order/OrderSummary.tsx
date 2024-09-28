@@ -3,27 +3,23 @@ import { useMemo } from "react"
 import ProductDetails from "./ProductDetails"
 import { formatCurrency } from "@/src/utils"
 import { useStore } from "@/src/store"
-import { CreateOrderData } from "@/src/types"
-import { createOrder } from "@/src/lib/api/orders"
+import { toast } from "sonner"
+import { createOrderAction } from "@/actions/create-order-actions"
+import { Button } from "../ui/button"
 
 export default function OrderSummary() {
   const order = useStore((state) => state.order)
   const clearOrder = useStore((state) => state.clearOrder)
   const total = useMemo(() => order.reduce((total, item) => total + (item.quantity * item.price), 0) , [order])
 
-  const handleCreateOrder = async (formData: FormData) => {
-    try {
-      const data: CreateOrderData = {
-        name: formData.get('name') as string ?? '',
-        order
-      }
-
-      const response = await createOrder(data)
-      console.log(response)
-      // toast.success('Pedido Realizado Correctamente')
+  const handleCreateOrder = async () => {
+    const response = await createOrderAction(order)
+    console.log(`Respuesta order ${JSON.stringify(response)}`)
+    if (response?.success) {
+      toast.success('Pedido Realizado Correctamente')
       clearOrder()
-    } catch (error) {
-      console.log(`Error controlado ${error}`)      
+    } else {
+      toast.error(`${response?.status} - ${response?.message}`)
     }
   }
 
@@ -45,7 +41,9 @@ export default function OrderSummary() {
                 <span className="font-bold">{formatCurrency(total)}</span>
               </p>
 
-              <form 
+              <Button className="mt-10 w-full" onClick={handleCreateOrder}>Confirmar Pedido</Button>
+
+              {/* <form 
                 className="w-full mt-10 space-y-5"
                 action={handleCreateOrder}
               >
@@ -61,7 +59,7 @@ export default function OrderSummary() {
                     className="py-2 rounded uppercase text-white bg-black w-full text-center cursor-pointer font-bold"
                     value='Confirmar Pedido'
                   />
-              </form>
+              </form> */}
           </div>
         )} 
     </aside>

@@ -3,7 +3,7 @@ import Logo from '../ui/Logo'
 import CategoryIcon from '../ui/CategoryIcon'
 
 export default async function OrderSidebar() {
-  const categories = await fetchCategories()
+  const {data: categories } = await fetchCategories()
 
   console.log(categories)
 
@@ -11,7 +11,7 @@ export default async function OrderSidebar() {
     <aside className="md:w-72 md:h-screen bg-white">
         <Logo />
 
-        {categories.map(category => (<CategoryIcon  key={category.id} category={category} />))}
+        {categories && categories.map(category => (<CategoryIcon  key={category.id} category={category} />))}
     </aside>
   )
 }

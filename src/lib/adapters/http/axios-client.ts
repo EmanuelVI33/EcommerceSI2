@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { HttpClient } from './http-client';
 import { API_URL } from '@/src/constants';
 import { Response } from '@/src/types';
@@ -18,59 +18,60 @@ export abstract class BaseAxiosClient implements HttpClient {
         this.setupInterceptors();
     }
 
-    // Método abstracto para configurar interceptores específicos
     protected abstract setupInterceptors(): void;
-    async get<T>(url: string): Promise<Response<T>> {
+
+    async get<T>(url: string, token: string): Promise<Response<T>> {
         try {
-            const response = await this.instance.get<T>(url);
+            console.log(`Recibe token ${token}`)
+            const response = await this.instance.get<Response<T>>(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
             return {
-                success: true,
-                status: response.status,
-                message: "Operación exitosa",
-                data: response.data,
+                status: response.status, 
+                success: true, 
+                message: response.data.message, 
+                data: response.data.data 
             };
         } catch (error) {
-            return this.handleError(error);
+            if (axios.isAxiosError(error)) {
+                return {
+                    status: error.response?.status ?? 500,
+                    success: false,
+                    message: error.response?.data.message ?? "Error desconocido",
+                    data: undefined 
+                };
+            }
+            throw error; 
         }
     }
 
-    async post<T>(url: string, data: unknown): Promise<Response<T>> {
+    async post<T>(url: string, data: unknown, token = ''): Promise<Response<T>> {
         try {
-            const response = await this.instance.post<T>(url, data);
+            const response = await this.instance.post<Response<T>>(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }     
+            });
+            
             return {
-                success: true,
-                status: response.status,
-                message: "Operación exitosa",
-                data: response.data,
+                status: response.status, 
+                success: true, 
+                message: response.data.message, 
+                data: response.data.data 
             };
         } catch (error) {
-            return this.handleError<T>(error);
+            if (axios.isAxiosError(error)) {
+                return {
+                    status: error.response?.status ?? 500,
+                    success: false,
+                    message: error.response?.data.message ?? "Error desconocido",
+                    data: undefined 
+                };
+            }
+            throw error; 
         }
-    }
-
-    // Centraliza el manejo de errores en una función
-    private handleError<T>(error: unknown): Response<T> {
-        if (error instanceof AxiosError) {
-            console.error(`Error HTTP: ${error.response?.status} - ${error.response?.data?.message}`);
-
-            return {
-                status: error.response?.status || 500,
-                success: false,
-                message: error.response?.data?.message || "Error desconocido",
-                data: undefined,
-            };
-        }
-
-        console.error("Error inesperado: ", error);
-        return {
-            status: 500,
-            success: false,
-            message: "Ocurrió un error inesperado",
-            data: undefined,
-        };
     }
 }
-
-
-
-

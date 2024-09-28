@@ -1,15 +1,15 @@
 import { getProducts } from "@/src/lib/api/products";
-import { cookies } from "next/headers";
+// import { redirect } from "next/navigation";
 export default async function ProductsPage() {
-  const cookieStore = cookies();
-  const token = cookieStore.get('token')?.value ?? '';
-  const products = await getProducts(token)
-  console.log(products)
+  const response = await getProducts()
+  console.log(`Respuesta server ${JSON.stringify(response)}`)
+
+  const products = response.data
   return (
     <div>
       <h1>Lista de Productos</h1>
       <ul>
-        {products?.length > 0 && products.map((product) => (
+        {products && products.map((product) => (
           <li key={product.id}>
             <h2>{product.name}</h2>
             <p>Precio: ${product.price}</p>
