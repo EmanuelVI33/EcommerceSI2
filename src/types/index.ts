@@ -24,12 +24,14 @@ export type Category = {
     id?: string
     name: string
     description: string
+    imageUrl: string
 }
 export type Product = {
     id: string
     name: string
     price: number
     description: string
+    imageUrl: string
     category: Category
 }
 export type OrderProduct = {

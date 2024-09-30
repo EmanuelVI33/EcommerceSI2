@@ -17,7 +17,7 @@ function CategoryIcon({ category } : Props) {
             <div className="w-16 h-16 relative">
                 <Image 
                     fill
-                    src='/icon_cafe.svg'
+                    src={`/${category.imageUrl}`}
                     alt="Imagen Categoria"
                 />
             </div>

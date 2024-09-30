@@ -2,6 +2,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { fetchCategories } from "@/src/lib/api/categories";
 import { ColumnConfig } from "@/src/types/props";
+import Image from "next/image";
 import Link from "next/link";
 
 async function CategoryPage() {
@@ -11,6 +12,13 @@ async function CategoryPage() {
       { key: "id", label: "Id" },
       { key: "name", label: "Nombre" },
       { key: "description", label: "Descripción" },
+      {
+        key: "imageUrl",
+        label: "Imagén",
+        render: (value) => (
+          <Image src={`/${value}`} className="h-[150px]" width={200} height={400} alt="categoria" />
+        ),
+      },
     ];
 
     return (

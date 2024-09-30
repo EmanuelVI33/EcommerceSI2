@@ -1,3 +1,4 @@
+"use client"
 import { Product } from "@/src/types"
 import { formatCurrency } from "@/src/utils"
 import Image from "next/image"
@@ -7,13 +8,15 @@ interface Props {
     product: Product
 }
 
+
 function ProductCard({ product } : Props) {
     return (
         <div className="border bg-white">
             <Image 
                 width={400}
-                height={500}
-                src={'/products/cafe_01.jpg'}
+                height={200}
+                className="h-[200px]"
+                src={`/${product.imageUrl}`}
                 alt=""
             />
             <div className="p-5">

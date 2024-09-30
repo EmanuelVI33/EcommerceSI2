@@ -2,6 +2,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { CustomTable } from "@/components/ui/CustomTable";
 import { getProducts } from "@/src/lib/api/products";
 import { ColumnConfig } from "@/src/types/props";
+import Image from "next/image";
 import Link from "next/link";
 
 async function ProductPage() {
@@ -16,6 +17,13 @@ async function ProductPage() {
         label: "Categoria",
         render: (value) => (
           <p>{value?.name}</p>
+        ),
+      },
+      {
+        key: "imageUrl",
+        label: "Imagén",
+        render: (value) => (
+          <Image src={`/${value}`} className="h-[150px]" width={200} height={400} alt="categoria" />
         ),
       },
     ];

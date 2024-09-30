@@ -10,6 +10,7 @@ export default async function OrderSidebar() {
 
   return (
     <aside className="md:w-72 md:h-screen bg-white">
+        <h1 className="text-center text-4xl font-bold mt-2">Tienda Virtual</h1>
         <Logo />
         <div className="overflow-y-auto h-2/3 mb-5 p-2">
           {categories && categories.map(category => (<CategoryIcon  key={category.id} category={category} />))}
