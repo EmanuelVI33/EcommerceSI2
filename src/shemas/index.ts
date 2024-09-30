@@ -8,3 +8,21 @@ export const loginFormSchema = z.object({
     }),
     password: z.string(),
 })
+
+export const categoryFormSchema = z.object({
+    id: z.string().optional(),
+    name: z.string().min(3, {
+        message: "Correo debe tener al menor 3 caracteres",
+    }),
+    description: z.string(),
+})
+
+export const productFormSchema = z.object({
+    id: z.string().optional(),
+    price: z.number(),
+    name: z.string().min(3, {
+        message: "Correo debe tener al menor 3 caracteres",
+    }),
+    description: z.string(),
+    category: z
+})

@@ -1,33 +1,27 @@
-import { getOrders } from "@/src/lib/api/orders"
-import { Badge } from "@/components/ui/badge"
+import { buttonVariants } from "@/components/ui/button";
 import { CustomTable } from "@/components/ui/CustomTable";
-import { redirect } from "next/navigation";
+import { fetchCategories } from "@/src/lib/api/categories";
 import { ColumnConfig } from "@/src/types/props";
+import Link from "next/link";
 
 async function CategoryPage() {
-    const { data } = await getOrders()
-    if (!data) redirect("/auth/login")
-    const orders = data!
-
+    const response = await fetchCategories()
+    const orders = response.data.data
     const columns: ColumnConfig<typeof orders[number]>[] = [
       { key: "id", label: "Id" },
-      { key: "total", label: "Total" },
-      { key: "orderDate", label: "Fecha" },
-      {
-        key: "status",
-        label: "Estado",
-        render: (value) => (
-          <Badge>{value === 1 ? "Pendiente" : "Completado"}</Badge>
-        ),
-      },
+      { key: "name", label: "Nombre" },
+      { key: "description", label: "Descripción" },
     ];
-    
+
     return (
         <>
           <div className="flex justify-between mb-5">
-            <h1 className="font-bold text-2xl">Historial de Pedidos</h1>
+            <h1 className="font-bold text-2xl">Categorías</h1>
+            <Link href="/admin/categories/create" className={buttonVariants({variant: "default"})}>Crear Categoría</Link>
           </div>
-          <CustomTable columns={columns} data={orders} caption="Mis Pedidos" />
+          <div className="p-5 mx-auto">
+            {orders && <CustomTable columns={columns} data={orders!} caption="Mis Pedidos" options={{route: '/admin/categories', deleteAction: false}} />}
+          </div>
         </>
     )
 }

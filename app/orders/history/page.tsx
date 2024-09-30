@@ -23,12 +23,12 @@ async function OrderHistoryPage() {
     ];
     
     return (
-        <>
+        <main>
           <div className="flex justify-between mb-5">
             <h1 className="font-bold text-2xl">Historial de Pedidos</h1>
           </div>
-          <CustomTable columns={columns} data={orders} caption="Mis Pedidos" />
-        </>
+          <CustomTable columns={columns} data={orders} caption="Mis Pedidos" options={{route: '', deleteAction: false, editAction: false}} />
+        </main>
     )
 }
 

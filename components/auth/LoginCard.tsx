@@ -19,6 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { loginAction } from "@/actions/auth-actions"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { ROLE } from "@/src/types/enum"
 
 function LoginCard() {
     const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -31,8 +32,11 @@ function LoginCard() {
         console.log(`Respuesta cliente ${response.message}`)
 
         if (response.success && response.data) {
-            localStorage.setItem('token', response.data?.token);
-            router.push('/orders/1')
+            if (response.data.role === ROLE.ADMIN) {
+                router.replace('/admin/categories')
+            } else {
+                router.replace('/orders/1')
+            }
             return
         }
 
@@ -75,8 +79,8 @@ function LoginCard() {
                             )}
                         />   
                     </CardContent>
-                    <CardFooter className="mt-2">
-                        <Button type="submit" className={`w-full}`}>Ingresar</Button>
+                    <CardFooter className="flex justify-end mt-2">
+                        <Button type="submit" className="w-1/3">Ingresar</Button>
                     </CardFooter>
                 </Card>
                 <div className="mt-2 flex justify-end">

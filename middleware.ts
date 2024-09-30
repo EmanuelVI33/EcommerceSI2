@@ -31,6 +31,7 @@ export const config = {
     '/auth/:path*',
     '/products/:path*',
     '/categories/:path*',
-    '/orders/:path*'  
+    '/orders/:path*',  
+    '/admin/:path*'
   ],
 };

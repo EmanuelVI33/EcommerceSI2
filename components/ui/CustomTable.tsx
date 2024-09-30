@@ -9,16 +9,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ColumnConfig } from "@/src/types/props";
-import { Button } from "./button";
-
+import { Button, buttonVariants } from "./button";
+import Link from "next/link";
 
 interface GenericTableProps<T> {
   data: T[];
   columns: ColumnConfig<T>[];
   caption?: string;
+  options: Options
 }
 
-export function CustomTable<T>({ data, columns, caption }: GenericTableProps<T>) {
+interface Options {
+  route: string // Absolute
+  deleteAction?: boolean
+  editAction?: boolean
+}
+
+export function CustomTable<T>({ data, columns, caption, options: {route, deleteAction = true, editAction = true } }: GenericTableProps<T>) {
   return (
     <Table>
       {caption && <TableCaption>{caption}</TableCaption>}
@@ -27,7 +34,7 @@ export function CustomTable<T>({ data, columns, caption }: GenericTableProps<T>)
           {columns.map((col) => (
             <TableHead key={col.key as string}>{col.label}</TableHead>
           ))}
-          <TableHead className="text-center">Acciones</TableHead>
+          {deleteAction || editAction ? <TableHead className="text-center">Acciones</TableHead> : <></>}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -40,8 +47,8 @@ export function CustomTable<T>({ data, columns, caption }: GenericTableProps<T>)
             ))}
             {
               <TableCell className="flex justify-evenly gap-2">
-                <Button>Editar</Button>
-                <Button>Eliminar</Button>
+                {editAction && <Link href={`${route}/${item['id']}/edit`} className={buttonVariants({variant: "default"})}>Editar</Link>}
+                {deleteAction && <Button>Eliminar</Button>}
               </TableCell>
             }
           </TableRow>

@@ -3,6 +3,7 @@
 import { fetchLogin } from "@/src/lib/api/auth"
 import { loginFormSchema } from "@/src/shemas"
 import { cookies } from 'next/headers'
+import { redirect } from "next/navigation"
 import { z } from "zod"
 
 export async function loginAction(loginForm: z.infer<typeof loginFormSchema>) {
@@ -28,4 +29,11 @@ export async function loginAction(loginForm: z.infer<typeof loginFormSchema>) {
     }
 
     return response;
+}
+
+export async function logoutAction() {
+    const deleteCookies = cookies()
+    deleteCookies.delete('token')
+    deleteCookies.delete('userId')
+    redirect('/auth/login')
 }
