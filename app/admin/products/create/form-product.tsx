@@ -37,7 +37,7 @@ function FormProduct({product, fnAction} : Props) {
             price: product?.price ?? 0,
             description: product?.description ?? '',
             imageUrl: product?.imageUrl ?? '',
-            categoryId: product?.category?.id ?? ''
+            categoryId: '1'
         }
     })
 
@@ -122,25 +122,24 @@ function FormProduct({product, fnAction} : Props) {
                         </FormItem>
                     )}
                 />   
+                <FormField
+                    control={form.control}
+                    name="categoryId"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormControl>
+                                <Input type="hidden" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />   
                 {product?.imageUrl && (
                     <div className="mt-4">
                         <FormLabel>Imagen Actual</FormLabel>
                         <img src={product.imageUrl} alt="Imagen de categoría" className="w-40 h-auto" />
                     </div>
                 )}
-                <FormField
-                    control={form.control}
-                    name="categoryId"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Descripción</FormLabel>
-                            <FormControl>
-                                <Input type="hidden" {...field} defaultValue="1" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />   
                 <Input
                     className="mt-4"
                     type="file"
