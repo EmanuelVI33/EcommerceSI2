@@ -1,5 +1,8 @@
 import { ROLE } from "./enum";
 
+export type EntityWithId = {
+    id?: string; 
+}
 export type Response<T> = {
     status?: number 
     message?: string
@@ -20,27 +23,25 @@ export type AuthResponse = {
     userId: string
     role: ROLE
 }
-export type Category = {
-    id?: string
+export type Category = EntityWithId & {
     name: string
     description: string
     imageUrl: string
 }
-export type Product = {
-    id: string
+export type Product = EntityWithId & {
     name: string
-    price: number
+    price: string
     description: string
     imageUrl: string
-    category: Category
+    categoryId: string
+    category?: Category
 }
 export type OrderProduct = {
     orderId: string
     productId: string
     quantity: number
 }
-export type Order = {
-    id: number
+export type Order = EntityWithId & {
     total: number
     orderDate: string
     status: number 

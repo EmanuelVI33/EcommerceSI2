@@ -1,50 +1,49 @@
 "use client"
 
-import { categoryFormSchema } from "@/src/shemas"
+import { categoryFormSchema, productFormSchema } from "@/src/shemas"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import { Textarea } from "../../../../components/ui/textarea"
 import { Button } from "../../../../components/ui/button"
 import { toast } from "sonner"
-import { ApiResponse, Category, ResponseMessage } from "@/src/types"
-import { Product } from '../../../../src/types/index';
+import { ApiResponse, ResponseMessage, Product } from "@/src/types"
 
 type Props = {
     product?: Product
-    fnAction: (product: Category) => Promise<{
+    fnAction: (product: Product) => Promise<{
         success: boolean;
-        data?: ResponseMessage<Category> | ApiResponse;
+        data?: ResponseMessage<Product> | ApiResponse;
     }>;
 }
 
-function FormProduct({product, fnAction} : Props) {
+function FormProduct({product} : Props) {
     console.log(`Recibe product ${product}`)
-    const router = useRouter()
-    const form = useForm<z.infer<typeof categoryFormSchema>>({
+    // const router = useRouter()
+    const form = useForm<z.infer<typeof productFormSchema>>({
         resolver: zodResolver(categoryFormSchema),
         defaultValues: {
             name: product?.name,
-            price: product?.price,
+            price: product?.price + "",
             description: product?.description,
-            category: product?.category,
         }
     })
 
-    async function onSubmit(values: z.infer<typeof categoryFormSchema>) {
+    async function onSubmit(values: z.infer<typeof productFormSchema>) {
+        console.log(values)
         try {
-            const response = await fnAction({...values, id: product?.id });
+            // const response = await fnAction({...values, id: product?.id, imageUrl: '', categoryId: '1', category: undefined });
 
-            if (response.success) {
-                toast.success('Operación exitosa');
-                router.replace('/admin/products');
-                router.refresh();
-            } else {
-                toast.error(`Error: ${response.data?.message}`);
-            }
+            // if (response.success) {
+            //     toast.success('Operación exitosa');
+            //     router.replace('/admin/products');
+            //     router.refresh();
+            // } else {
+            //     toast.error(`Error: ${response.data?.message}`);
+            // }
         } catch (error) {
             console.error("Error al realizar la acción:", error);
             toast.error('Ocurrió un error al guardar la categoría.');

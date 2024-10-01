@@ -10,7 +10,7 @@ import { Button } from "../ui/button"
 export default function OrderSummary() {
   const order = useStore((state) => state.order)
   const clearOrder = useStore((state) => state.clearOrder)
-  const total = useMemo(() => order.reduce((total, item) => total + (item.quantity * item.price), 0) , [order])
+  const total = useMemo(() => order.reduce((total, item) => total + (item.quantity * Number(item.price)), 0) , [order])
 
   const handleCreateOrder = async () => {
     const response = await createOrderAction(order)

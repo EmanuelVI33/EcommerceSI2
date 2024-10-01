@@ -11,8 +11,9 @@ import {
 import { ColumnConfig } from "@/src/types/props";
 import { Button, buttonVariants } from "./button";
 import Link from "next/link";
+import { EntityWithId } from "@/src/types";
 
-interface GenericTableProps<T> {
+interface GenericTableProps<T extends EntityWithId> {
   data: T[];
   columns: ColumnConfig<T>[];
   caption?: string;
@@ -25,7 +26,7 @@ interface Options {
   editAction?: boolean
 }
 
-export function CustomTable<T>({ data, columns, caption, options: {route, deleteAction = true, editAction = true } }: GenericTableProps<T>) {
+export function CustomTable<T extends EntityWithId>({ data, columns, caption, options: {route, deleteAction = true, editAction = true } }: GenericTableProps<T>) {
   return (
     <Table>
       {caption && <TableCaption>{caption}</TableCaption>}
@@ -47,7 +48,7 @@ export function CustomTable<T>({ data, columns, caption, options: {route, delete
             ))}
             {
               <TableCell className="flex justify-evenly gap-2">
-                {editAction && <Link href={`${route}/${item['id']}/edit`} className={buttonVariants({variant: "default"})}>Editar</Link>}
+                {editAction && <Link href={`${route}/${item?.id}/edit`} className={buttonVariants({variant: "default"})}>Editar</Link>}
                 {deleteAction && <Button>Eliminar</Button>}
               </TableCell>
             }

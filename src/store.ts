@@ -13,20 +13,20 @@ export interface Store {
 export const useStore = create<Store>((set, get) => ({
     order: [],
     addToOrder: (product) => {
-        const {categoryId, image, ...data} = product
-        console.log(categoryId, image, data)
+        const {categoryId, ...data} = product
+        console.log(categoryId, data)
         let order : OrderItem[] = []
         if(get().order.find( item => item.id === product.id)) {
             order = get().order.map( item => item.id === product.id ? {
                 ...item,
                 quantity: item.quantity + 1,
-                subtotal: item.price * (item.quantity + 1)
+                subtotal: Number(item.price) * (item.quantity + 1)
             } : item )
         } else {
             order = [...get().order, {
                 ...data,
                 quantity: 1,
-                subtotal: 1 * product.price
+                subtotal: 1 * Number(product.price)
             }]
         }
         set(() => ({
@@ -38,7 +38,7 @@ export const useStore = create<Store>((set, get) => ({
             order: state.order.map( item => item.id === id ? {
                 ...item,
                 quantity: item.quantity + 1,
-                subtotal: item.price * (item.quantity + 1)
+                subtotal:  Number(item.price) * (item.quantity + 1)
             } : item )
         }))
     },
@@ -46,7 +46,7 @@ export const useStore = create<Store>((set, get) => ({
         const order = get().order.map( item => item.id === id ? {
             ...item,
             quantity: item.quantity - 1,
-            subtotal: item.price * (item.quantity - 1)
+            subtotal: Number(item.price) * (item.quantity - 1)
         } : item )
 
         set(() => ({

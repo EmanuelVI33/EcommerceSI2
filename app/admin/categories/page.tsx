@@ -22,7 +22,7 @@ async function CategoryPage() {
     ];
 
     return (
-        <>
+        <div>
           <div className="flex justify-between mb-5">
             <h1 className="font-bold text-2xl">Categorías</h1>
             <Link href="/admin/categories/create" className={buttonVariants({variant: "default"})}>Crear Categoría</Link>
@@ -30,7 +30,7 @@ async function CategoryPage() {
           <div className="p-5 mx-auto">
             {orders && <CustomTable columns={columns} data={orders!} caption="Mis Pedidos" options={{route: '/admin/categories', deleteAction: false}} />}
           </div>
-        </>
+        </div>
     )
 }
 

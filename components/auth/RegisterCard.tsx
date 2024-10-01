@@ -18,7 +18,6 @@ function RegisterCard() {
     const form = useForm()
 
     return (
-        <>
             <form action="">
                 <Form {...form}>
                     <Card className="w-[30rem]">
@@ -76,7 +75,6 @@ function RegisterCard() {
                     </div>
                 </Form>   
             </form>
-        </>
     )
 }
 

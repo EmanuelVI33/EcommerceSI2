@@ -19,10 +19,9 @@ export const categoryFormSchema = z.object({
 
 export const productFormSchema = z.object({
     id: z.string().optional(),
-    price: z.number(),
+    price: z.string(),
     name: z.string().min(3, {
         message: "Correo debe tener al menor 3 caracteres",
     }),
     description: z.string(),
-    category: z
 })

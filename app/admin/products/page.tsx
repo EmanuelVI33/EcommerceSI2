@@ -6,7 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 async function ProductPage() {
-    const {data: products} = await getProducts()
+    const response = await getProducts()
+    const products = response.data?.data
     const columns: ColumnConfig<typeof products[number]>[] = [
       { key: "id", label: "Id" },
       { key: "name", label: "Nombre" },
@@ -15,8 +16,8 @@ async function ProductPage() {
       {
         key: "category",
         label: "Categoria",
-        render: (value) => (
-          <p>{value?.name}</p>
+        render: () => (
+          <p>Categoria</p>
         ),
       },
       {

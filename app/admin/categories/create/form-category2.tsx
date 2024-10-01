@@ -33,7 +33,7 @@ function FormCategory2({category, fnAction} : Props) {
 
     async function onSubmit(values: z.infer<typeof categoryFormSchema>) {
         try {
-            const response = await fnAction({...values, id: category?.id });
+            const response = await fnAction({...values, id: category?.id, imageUrl: '' });
 
             if (response.success) {
                 toast.success('Operación exitosa');

@@ -1,6 +1,6 @@
 import { showById } from "@/src/lib/api/categories"
-import FormProduct from "../../create/form-category2"
-import { updateCategoryAction } from "@/actions/category/update-category-action"
+// import FormProduct from "../../create/form-category2"
+// import { updateCategoryAction } from "@/actions/category/update-category-action"
 
 async function UpdateCaregoryPage({params}: { params: { id: string } }) {
     const { data: category } = await showById(params.id)
@@ -10,7 +10,7 @@ async function UpdateCaregoryPage({params}: { params: { id: string } }) {
         <div className="">
             <h1 className="text-2xl font-semibold text-center">Editando Categoría</h1>
             <div className="w-1/2 mx-auto mt-5">
-                <FormProduct product={category} fnAction={updateCategoryAction} />
+                {/* <FormProduct product={category} fnAction={updateCategoryAction} /> */}
             </div>
         </div>
     )

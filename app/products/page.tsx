@@ -4,7 +4,7 @@ export default async function ProductsPage() {
   const response = await getProducts()
   console.log(`Respuesta server ${JSON.stringify(response)}`)
 
-  const products = response.data
+  const products = response.data.data
   return (
     <div>
       <h1>Lista de Productos</h1>
@@ -14,10 +14,10 @@ export default async function ProductsPage() {
             <h2>{product.name}</h2>
             <p>Precio: ${product.price}</p>
             <p>Descripción: {product.description}</p>
-            <p>
+            {/* <p>
               Categoría: {product.category.name} -{' '}
               {product.category.description}
-            </p>
+            </p> */}
           </li>
         ))}
       </ul>

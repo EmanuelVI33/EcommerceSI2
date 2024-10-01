@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/sonner"
 
 function AdminLayout({ children }: Readonly<{ children: React.ReactNode}>) {
     return (
-        <>
+        <div>
             <div className="md:flex">
                 <aside className="md:w-72 md:h-screen">
                     <AdminSidebar />
@@ -14,7 +14,7 @@ function AdminLayout({ children }: Readonly<{ children: React.ReactNode}>) {
                 </main>
             </div>
             <Toaster />
-        </>
+        </div>
     )
 }
 

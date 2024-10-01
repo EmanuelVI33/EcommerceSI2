@@ -33,7 +33,7 @@ export default function ProductDetails({ item }: ProductDetailsProps) {
                     </button>
                 </div>
                 <p className="text-2xl text-amber-500 font-black">
-                    {formatCurrency(item.price)}
+                    {formatCurrency(Number(item.price))}
                 </p>
                 <div className="flex gap-5 px-10 py-2 bg-gray-100 w-fit rounded-lg">
                     <button

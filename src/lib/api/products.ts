@@ -2,13 +2,19 @@ import { ApiResponse, Product } from "@/src/types";
 import { httpPublic } from "../adapters/http/http-client-factory";
 import { cookies } from 'next/headers'
 import { AxiosError } from "axios";
+import { ResponseMessage } from '../../types/index';
+import { axiosClient } from "@/src/constants/axios-client";
 
 const httpClient = httpPublic()
 
 export async function getProducts() {
     try {
         const token = cookies().get('token')?.value 
-        const response = await httpClient.get<Product[]>('/admin/products', token)
+        const response = await axiosClient.get<ResponseMessage<Product[]>>('/admin/products', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         return {
             success: true,
             data: response.data 
