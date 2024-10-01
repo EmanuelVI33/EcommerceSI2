@@ -15,13 +15,19 @@ export const categoryFormSchema = z.object({
         message: "Correo debe tener al menor 3 caracteres",
     }),
     description: z.string(),
+    imageUrl: z.string(),
 })
 
 export const productFormSchema = z.object({
     id: z.string().optional(),
-    price: z.string(),
     name: z.string().min(3, {
         message: "Correo debe tener al menor 3 caracteres",
     }),
+    price: z.preprocess(
+        (val) => (typeof val === "string" ? parseFloat(val) : val), // Transformar string a número
+        z.number().positive({ message: "El precio debe ser un número positivo" }) // Asegurar que sea un número
+    ),
     description: z.string(),
+    imageUrl: z.string(),
+    categoryId: z.string(),
 })

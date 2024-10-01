@@ -39,3 +39,13 @@ export async function getProductByCategory(id: string) {
         };       
     }
 }
+
+export async function getProduct(id: string) {
+    const token = cookies().get('token')?.value 
+    const response = await axiosClient.get<ResponseMessage<Product>>(`/admin/products/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });   
+    return response.data;
+}

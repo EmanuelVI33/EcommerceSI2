@@ -33,7 +33,7 @@ export type Product = EntityWithId & {
     price: string
     description: string
     imageUrl: string
-    categoryId: string
+    // categoryId: string
     category?: Category
 }
 export type OrderProduct = {

@@ -1,6 +1,6 @@
 "use server"
 import { axiosClient } from "@/src/constants/axios-client"
-import { ApiResponse, Category, ResponseMessage } from "@/src/types"
+import { ApiResponse, Product, ResponseMessage } from "@/src/types"
 import { AxiosError } from "axios"
 import { cookies } from "next/headers"
 import { v2 as cloudinary } from 'cloudinary';
@@ -11,7 +11,7 @@ cloudinary.config({
     api_secret: '2KK5KtUoChm1UheH-gbKSvAwxPI' 
 });
 
-export async function createCategoryAction(formData: FormData) {
+export async function updateProductAction(formData: FormData) {
     const token = cookies().get('token')?.value;
 
     try {
@@ -33,15 +33,14 @@ export async function createCategoryAction(formData: FormData) {
             imageUrl = responseCloudinary.secure_url ?? '';
             console.log(`Imagen guardada en Cloudinary: ${imageUrl}`);
 
-            formData.append('imageUrl', imageUrl);
+            formData.set('imageUrl', imageUrl);
         }
 
-        const response = await axiosClient.post<ResponseMessage<Category>>("/admin/categories", formData, {
+        const response = await axiosClient.put<ResponseMessage<Product>>(`/admin/products/${formData.get('id')}`, formData, {
             headers: {
-                'Authorization': `Bearer ${token}`,
-                // 'Content-Type': 'multipart/form-data'  // Importante para manejar el FormData
+                'Authorization': `Bearer ${token}`
             }
-        });
+        })
 
         return {
             success: true,

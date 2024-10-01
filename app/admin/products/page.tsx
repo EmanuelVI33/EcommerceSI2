@@ -24,7 +24,7 @@ async function ProductPage() {
         key: "imageUrl",
         label: "Imagén",
         render: (value) => (
-          <Image src={`/${value}`} className="h-[150px]" width={200} height={400} alt="categoria" />
+          <Image src={value+''} className="h-[150px]" width={200} height={400} alt="categoria" />
         ),
       },
     ];
